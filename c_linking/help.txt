@@ -1,0 +1,12 @@
+Example of static linking from c to go
+use:
+    go build -buildmode=c-archive main.go
+to build go file as static library
+Then create a main.c that includes the library and uses a function from it
+Then use:
+    cc main.c ./main.a -lpthread
+to create the c exe, and ./a.out to run
+
+
+to create shared library, build with flag c-shared main.go.
+you also dont need the -lpthread at end of cc compile
