@@ -1,0 +1,5 @@
+2021/03/22 07:01:47 This is a log message
+ERROR: 2021/03/22 07:09:48 loggin.go:38: This is an error
+WARNING: 2021/03/22 07:12:07 loggin.go:35: This is an warning
+WARNING: 2021/03/22 07:13:30 loggin.go:35: This is an warning
+WARNING: 2021/03/22 07:18:51 loggin.go:61: This is an warning
