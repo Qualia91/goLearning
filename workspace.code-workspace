@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "c_linking"
+		},
+		{
+			"path": "go_standard_library/cli_app"
 		}
 	],
 	"settings": {}

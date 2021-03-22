@@ -1,2 +1,0 @@
-INFO: 2021/03/22 07:18:51 loggin.go:43: This is info
-FATAL: 2021/03/22 07:18:51 loggin.go:44: Program Quit
