@@ -18,4 +18,22 @@ func main() {
 	println(p.GetTwitterHandler().RedirectUrl())
 	fmt.Printf("Type: %T\n", p.GetTwitterHandler())
 	fmt.Println(p.Citizen.Country())
+
+	name1 := NameTest{
+		firstName: "Nick",
+		lastName:  "Wood",
+	}
+	name2 := NameTest{
+		firstName: "Nick",
+		lastName:  "Wood",
+	}
+
+	if name1 == name2 {
+		println("We match because NameTest has a simple memory layout and so go can compare the values in the object")
+	}
+}
+
+type NameTest struct {
+	firstName string
+	lastName  string
 }
