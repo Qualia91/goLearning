@@ -2,6 +2,7 @@ package organization
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -9,14 +10,25 @@ type Identifiable interface {
 	ID() string
 }
 
+// type alias: aliases type after = with defined type (refrences original type so cant extend)
+// type TwitterHandler = string
+
+// type decleration: Wrappes last type to make a new type (copies fields and methods to new type)
+type TwitterHandler string
+
 type Person struct {
 	firstName      string
 	lastName       string
-	twitterHandler string
+	twitterHandler TwitterHandler
+}
+
+func (th TwitterHandler) RedirectUrl() string {
+	cleanhandler := strings.TrimPrefix(string(th), "@")
+	return fmt.Sprintf("https://www.twitter.com/%s", cleanhandler)
 }
 
 // GetTwitterHandler returns the string twitterHandler
-func (p *Person) GetTwitterHandler() string {
+func (p *Person) GetTwitterHandler() TwitterHandler {
 	return p.twitterHandler
 }
 
@@ -30,10 +42,10 @@ func (p *Person) GetLastName() string {
 	return p.lastName
 }
 
-func (p *Person) SetTwitterHandler(handler string) error {
+func (p *Person) SetTwitterHandler(handler TwitterHandler) error {
 	if len(handler) == 0 {
 		p.twitterHandler = handler
-	} else if !strings.HasPrefix(handler, "@") {
+	} else if !strings.HasPrefix(string(handler), "@") {
 		return errors.New("twitter handler must start with @")
 	}
 
@@ -41,7 +53,7 @@ func (p *Person) SetTwitterHandler(handler string) error {
 	return nil
 }
 
-func (p *Person) ID() string {
+func (p *Person) ID() TwitterHandler {
 	return "12345"
 }
 

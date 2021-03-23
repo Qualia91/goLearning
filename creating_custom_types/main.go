@@ -15,4 +15,6 @@ func main() {
 		fmt.Printf("Error: %s\n", err.Error())
 	}
 	println(p.GetTwitterHandler())
+	println(p.GetTwitterHandler().RedirectUrl())
+	fmt.Printf("Type: %T\n", p.GetTwitterHandler())
 }
