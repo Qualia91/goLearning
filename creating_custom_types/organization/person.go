@@ -10,6 +10,50 @@ type Identifiable interface {
 	ID() string
 }
 
+type Citizen interface {
+	Identifiable
+	Country() string
+}
+
+type socialSecurityNumber string
+
+func NewSocialSecurityNumber(value string) Citizen {
+	return socialSecurityNumber(value)
+}
+
+func (ssn socialSecurityNumber) ID() string {
+	return string(ssn)
+}
+
+func (ssn socialSecurityNumber) Country() string {
+	return "USA"
+}
+
+type europeanUnionIdNumber struct {
+	country string
+	value   string
+}
+
+func NewEuropeanUnionIdNumber(country, value string) Citizen {
+	return europeanUnionIdNumber{
+		country: country,
+		value:   value,
+	}
+}
+
+func (eui europeanUnionIdNumber) ID() string {
+	return fmt.Sprintf("EU: %s\n", eui)
+}
+
+func (eui europeanUnionIdNumber) Country() string {
+	return eui.country
+}
+
+type Name struct {
+	firstName string
+	lastName  string
+}
+
 // type alias: aliases type after = with defined type (refrences original type so cant extend)
 // type TwitterHandler = string
 
@@ -17,9 +61,9 @@ type Identifiable interface {
 type TwitterHandler string
 
 type Person struct {
-	firstName      string
-	lastName       string
+	Name
 	twitterHandler TwitterHandler
+	Citizen
 }
 
 func (th TwitterHandler) RedirectUrl() string {
@@ -53,13 +97,9 @@ func (p *Person) SetTwitterHandler(handler TwitterHandler) error {
 	return nil
 }
 
-func (p *Person) ID() TwitterHandler {
-	return "12345"
-}
-
-func NewPerson(firstName, lastName string) Person {
+func NewPerson(firstName, lastName string, citizen Citizen) Person {
 	return Person{
-		firstName: firstName,
-		lastName:  lastName,
+		Name:    Name{firstName: firstName, lastName: lastName},
+		Citizen: citizen,
 	}
 }

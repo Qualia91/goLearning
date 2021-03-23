@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	p := organization.NewPerson("Nick", "Wood")
+	p := organization.NewPerson("Nick", "Wood", organization.NewEuropeanUnionIdNumber("UK", "123-456-789"))
 	println(p.ID())
 	println(p.GetFirstName())
 	println(p.GetLastName())
@@ -17,4 +17,5 @@ func main() {
 	println(p.GetTwitterHandler())
 	println(p.GetTwitterHandler().RedirectUrl())
 	fmt.Printf("Type: %T\n", p.GetTwitterHandler())
+	fmt.Println(p.Citizen.Country())
 }
