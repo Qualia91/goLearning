@@ -3,6 +3,7 @@ package organization
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -34,11 +35,29 @@ type europeanUnionIdNumber struct {
 	value   string
 }
 
-func NewEuropeanUnionIdNumber(country, value string) Citizen {
-	return europeanUnionIdNumber{
-		country: country,
-		value:   value,
+func NewEuropeanUnionIdNumber(country string, value interface{}) Citizen {
+
+	switch v := value.(type) {
+	case string:
+		return europeanUnionIdNumber{
+			country: country,
+			value:   v,
+		}
+	case int:
+		return europeanUnionIdNumber{
+			country: country,
+			value:   strconv.Itoa(v),
+		}
+	case europeanUnionIdNumber:
+		return europeanUnionIdNumber{
+			country: country,
+			value:   v.value,
+		}
+	default:
+		panic("No type found")
+
 	}
+
 }
 
 func (eui europeanUnionIdNumber) ID() string {
