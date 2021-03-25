@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"deepdiveintofunctions/simplemath"
+	"fmt"
+)
 
 func main() {
 
@@ -9,6 +12,11 @@ func main() {
 	answer, _ := namedReturnVariables()
 
 	fmt.Println(answer)
+
+	sv := simplemath.NewSemanticVersion(1, 2, 3)
+	println(sv.String())
+	sv.IncrementMajor()
+	println(sv.String())
 
 }
 
