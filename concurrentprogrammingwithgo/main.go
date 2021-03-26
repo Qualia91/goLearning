@@ -14,24 +14,37 @@ var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
 func main() {
 	wg := &sync.WaitGroup{}
 	m := &sync.RWMutex{}
+	cacheCh := make(chan Book)
+	dbCh := make(chan Book)
 	for i := 0; i < 10; i++ {
 		id := rnd.Intn(4) + 1
 		wg.Add(2)
-		go func(id int, wg *sync.WaitGroup, m *sync.RWMutex) {
+		go func(id int, wg *sync.WaitGroup, m *sync.RWMutex, ch chan<- Book) {
 			if b, ok := queryCache(id, m); ok {
-				fmt.Println("Found in cache")
-				fmt.Println(b)
+				ch <- b
 			}
 			wg.Done()
-		}(id, wg, m)
-		go func(id int, wg *sync.WaitGroup, m *sync.RWMutex) {
+		}(id, wg, m, cacheCh)
+		go func(id int, wg *sync.WaitGroup, m *sync.RWMutex, ch chan<- Book) {
 			if b, ok := queryDatabase(id, m); ok {
-				fmt.Println("Found in database")
-				fmt.Println(b)
+				ch <- b
 			}
 			wg.Done()
-		}(id, wg, m)
-		//time.Sleep(150 * time.Millisecond)
+		}(id, wg, m, dbCh)
+
+		// create one goroutine per query to handle response
+		go func(cacheCh, dbCh <-chan Book) {
+			select {
+			case b := <-cacheCh:
+				fmt.Println("From cache")
+				fmt.Println(b)
+				<-dbCh
+			case b := <-dbCh:
+				fmt.Println("From database")
+				fmt.Println(b)
+			}
+		}(cacheCh, dbCh)
+		time.Sleep(150 * time.Millisecond)
 	}
 	wg.Wait()
 }
