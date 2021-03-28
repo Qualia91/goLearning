@@ -23,7 +23,11 @@ func SetupRoutes(apiBasePath string) {
 func productsHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
-		productList := getProductList()
+		productList, err := getProductList()
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 		productsJSON, err := json.Marshal(productList)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -48,7 +52,7 @@ func productsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		_, err = addOrUpdateProduct(newProduct)
+		_, err = insertProduct(newProduct)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -68,7 +72,11 @@ func productHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
-	product := getProduct(productID)
+	product, err := getProduct(productID)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	if product == nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
@@ -85,12 +93,7 @@ func productHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(prodJSON)
 	case http.MethodPut:
 		var updatedProduct Product
-		bodyBytes, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		err = json.Unmarshal(bodyBytes, &updatedProduct)
+		err := json.NewDecoder(r.Body).Decode(&updatedProduct)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return
@@ -100,7 +103,11 @@ func productHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		addOrUpdateProduct(updatedProduct)
+		err = updateProduct(updatedProduct)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		w.WriteHeader(http.StatusCreated)
 		return
