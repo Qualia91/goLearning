@@ -19,6 +19,8 @@ func main() {
 	var logReg registry.Registration
 	logReg.ServiceName = registry.LogService
 	logReg.ServiceURL = serviceAddress
+	logReg.RequiredServices = make([]registry.ServiceName, 0)
+	logReg.ServiceUpdateURL = logReg.ServiceURL + "/services"
 
 	ctx, err := service.Start(
 		context.Background(),

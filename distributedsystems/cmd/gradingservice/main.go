@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"distributedsystems/grades"
+	"distributedsystems/log"
 	"distributedsystems/registry"
 	"distributedsystems/service"
 	"fmt"
@@ -18,6 +19,8 @@ func main() {
 	var gradingReg registry.Registration
 	gradingReg.ServiceName = registry.GradingService
 	gradingReg.ServiceURL = serviceAddress
+	gradingReg.RequiredServices = []registry.ServiceName{registry.LogService}
+	gradingReg.ServiceUpdateURL = gradingReg.ServiceURL + "/services"
 
 	ctx, err := service.Start(
 		context.Background(),
@@ -27,6 +30,11 @@ func main() {
 		grades.RegisterHandlers)
 	if err != nil {
 		stlog.Fatal(err)
+	}
+
+	if logProvider, err := registry.GetProvider(registry.LogService); err == nil {
+		fmt.Printf("Logging service was found at %v\n", logProvider)
+		log.SetClientLogger(logProvider, gradingReg.ServiceName)
 	}
 
 	// block until context is done
