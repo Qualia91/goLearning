@@ -21,6 +21,7 @@ func main() {
 	gradingReg.ServiceURL = serviceAddress
 	gradingReg.RequiredServices = []registry.ServiceName{registry.LogService}
 	gradingReg.ServiceUpdateURL = gradingReg.ServiceURL + "/services"
+	gradingReg.HeartbeatURL = gradingReg.ServiceURL + "/heartbeat"
 
 	ctx, err := service.Start(
 		context.Background(),
@@ -33,7 +34,6 @@ func main() {
 	}
 
 	if logProvider, err := registry.GetProvider(registry.LogService); err == nil {
-		fmt.Printf("Logging service was found at %v\n", logProvider)
 		log.SetClientLogger(logProvider, gradingReg.ServiceName)
 	}
 
