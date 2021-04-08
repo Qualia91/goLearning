@@ -1,0 +1,86 @@
+<script type="text/javascript">
+    var sock = null;
+    var wsuri = "ws://192.168.0.4:8080/serverwebsocket";
+
+    window.onload = function() {
+
+        console.log("onload");
+
+        sock = new WebSocket(wsuri);
+
+        sock.onopen = function() {
+            console.log("connected to " + wsuri);
+        }
+
+        sock.onclose = function(e) {
+            console.log("connection closed (" + e.code + ")");
+        }
+
+        sock.onmessage = function(e) {
+            console.log("message received: " + e.data);
+
+            // get json object
+            var jsonMessage = JSON.parse(e.data)
+
+            // create list item
+            var listItem = document.createElement("dt");
+            var descItem = document.createElement("dd");
+            var titleNode = document.createTextNode(jsonMessage.Username.concat(" @ ").concat(jsonMessage.TimeSent));
+            var messNode = document.createTextNode(jsonMessage.Message);
+            listItem.appendChild(titleNode)
+            descItem.appendChild(messNode)
+            document.getElementById('messageList').appendChild(listItem);
+            document.getElementById('messageList').appendChild(descItem);
+        }
+    };
+
+    function send() {
+        var msg = document.getElementById('message').value;
+        var name = document.getElementById('name').value;
+        var current = new Date();
+        var msgJson = JSON.stringify({
+            "Username": name,
+            "Message": msg,
+            "TimeSent": current.toLocaleString(),
+        });
+
+        sock.send(msgJson);
+        document.getElementById('message').value = "";
+        return false
+    };
+</script>
+
+<section id="extras" class="body">
+
+    
+
+  <div class="blogroll">
+    <h1>Messages</h1><dl id="messageList">
+        {{range $index, $element := .}}<dt>{{writeMessage .}}</dt>{{end}}
+    </dl>
+  </div>
+
+</section>
+
+<section id="extras" class="body">
+<fieldset>
+    <legend>Send Message as </legend>
+    <form> 
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input id="name" type="text">
+                </td>
+            </tr>
+            <tr>
+                <td>Message</td>
+                <td>
+                    <input id="message" type="text">
+                </td>
+            </tr>
+        </table>
+        <button onClick="return send();">Send Message</button>
+    </form>
+</fieldset>
+</section>

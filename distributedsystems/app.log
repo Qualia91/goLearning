@@ -1,0 +1,23 @@
+2021/03/30 15:02:25 this is a log message
+2021/03/30 15:03:23 this is a log message
+2021/03/30 15:03:57 %v
+ this is a log message
+2021/03/30 15:04:27 %v
+ this is a log message
+2021/03/30 15:04:36 this is a log message
+2021/03/30 15:04:38 this is a log message
+2021/03/30 15:04:39 this is a log message
+2021/03/30 15:04:41 this is a log message
+2021/03/30 15:04:42 this is a log message
+2021/03/30 15:04:42 this is a log message
+2021/03/30 15:04:43 this is a log message
+2021/03/30 15:04:44 this is a log message
+2021/03/30 15:04:44 this is a log message
+2021/03/31 19:59:37 [GradingService] - http: Server closed
+
+2021/03/31 20:15:41 [GradingService] - http: Server closed
+
+2021/04/01 08:53:13 [TeacherPortal] - http: Server closed
+
+2021/04/01 08:53:13 [GradingService] - http: Server closed
+

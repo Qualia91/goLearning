@@ -1,0 +1,4 @@
+github.com/alexellis/hmac v0.0.0-20180624210714-d5d71edd7bc7 h1:tPX9nmLsuE/p4NpX7fhH3fSIS1Ra1DFHv6FvF65rnMU=
+github.com/lib/pq v1.10.0 h1:Zx5DJFEYQXio93kgXnQ09fXNiUKsqv4OUEu2UtGcB1E=
+github.com/openfaas/faas-provider v0.0.0-20180910095832-845bf7aa58cb h1:ZVoe/adtSM12MduY4J/rJnSgGc0hIx602N2u+tg2Ujk=
+github.com/openfaas/openfaas-cloud/sdk v0.0.0-20201215121043-ffbb84724081 h1:OC2Q/+B0jiE0NI8/2OpprTGTbeqWWlOMhFNGSlMu+XE=

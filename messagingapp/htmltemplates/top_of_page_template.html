@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>{{.Title}}</title>
+
+<link rel="stylesheet" href="{{.CSS}}"/>
+
+</head>
+
+<body id="index" class="home">
+
+<header id="banner" class="body">
+  <h1 id="demo" >{{.Title}}</h1>
+
+  <nav><ul>
+    {{range $index, $element := $.NavBar}}{{writeBannerElement .
+    }}{{end}}
+  </ul></nav>
+
+</header>
