@@ -74,7 +74,7 @@ faas-cli new --lang $LANG --prefix $PREFIX $API_NAME
 
 
 build and deploy code with:
-faas-cli up -f todo.yaml
+faas-cli up -f todo.yml
 
 Go to function site:
 curl http://127.0.0.1:8080/function/todo
