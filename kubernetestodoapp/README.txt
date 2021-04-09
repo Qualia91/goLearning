@@ -32,7 +32,7 @@ check table with: \dt
 
 Installing the PLONK stack:
 Prometheus: Metrics, auto-scaling and observability (health checking)
-Linux
+Linkerd: Service Mesh
 OpenFaas: Framework for building serverless functionswith docker and k8s
 NATS: Cloud native computing foundation project for messaging and Pub/Sub
 K8s
