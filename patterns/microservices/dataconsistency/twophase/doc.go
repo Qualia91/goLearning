@@ -12,6 +12,8 @@ Transaction manager sends prepare message to hello and world services
 They send messages back saying they can save data
 Manager sends a commit message to get services to save data
 Services save data
+
+Bad for scaling, only use on small networks
 */
 
 package twophase
