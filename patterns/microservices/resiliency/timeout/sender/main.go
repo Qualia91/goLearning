@@ -27,7 +27,7 @@ func (h Handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		callServiceWithTimeout("ResquestOne", "9001", rw)
-		callServiceWithTimeout("ResquestOne", "9000", rw)
+		callServiceWithTimeout("ResquestOne", "9002", rw)
 	default:
 		rw.WriteHeader(http.StatusMethodNotAllowed)
 	}
