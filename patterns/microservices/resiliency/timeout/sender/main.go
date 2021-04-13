@@ -36,6 +36,7 @@ func (h Handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 func callServiceWithTimeout(requestText, port string, rw http.ResponseWriter) {
 	// create channel to manage timeout
 	channel := make(chan []byte, 1)
+	defer close(channel)
 
 	// start send and receive in go func and pass return string to channel
 	go func(channel chan []byte) {
@@ -43,11 +44,13 @@ func callServiceWithTimeout(requestText, port string, rw http.ResponseWriter) {
 		resp, err := http.Post(fmt.Sprintf("http://localhost:%s", port), "application/text", newReader)
 		if err != nil {
 			fmt.Printf("Error on post to %s: %s\n", port, err)
+			return
 		}
 
 		buf, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			fmt.Printf("Error on read of response from %s: %s\n", port, err)
+			return
 		}
 
 		channel <- buf
