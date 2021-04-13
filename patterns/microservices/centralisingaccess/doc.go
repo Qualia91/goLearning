@@ -4,6 +4,13 @@ API Gateway Pattern.
 Why:
 - Simplify Access to microservices network
 - Managing security
-- Imagine API as a product, it makes the product more user friendly*/
+- Imagine API as a product, it makes the product more user friendly
+
+
+Libraries:
+Kong
+KrakenD
+Many more...
+*/
 
 package centralisingaccess
