@@ -1,0 +1,136 @@
+consumes:
+- definingcontracts.v1+json
+info:
+  description: From the todo list tutorial on goswagger.io
+  title: A Todo list application
+  version: 1.0.0
+produces:
+- definingcontracts.v1+json
+schemes:
+- http
+swagger: "2.0"
+
+# definition section is to define model
+definitions:
+  item:
+    type: object
+    required:
+      - description
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      description:
+        type: string
+        minLength: 1
+      completed:
+        type: boolean
+
+# now define an error object
+  error:
+    type: object
+    required:
+      - message
+    properties: 
+      code:
+        type: integer
+        format: int64
+      message:
+        type: string
+
+
+# add endpoints
+paths:
+  /:
+    # define Get
+    get:
+      tags:
+        - todos
+      # parameters here define a limit on return objects
+      parameters:
+        - name: since
+          in: query
+          type: integer
+          format: int64
+        - name: limit
+          in: query
+          type: integer
+          format: int32
+          default: 20
+      responses:
+        200:
+          description: list the todo operations
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/item"
+        # defining default response as error so it returns error for anything it cant do
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/error"
+    
+    # define a Post
+    post:
+      tags:
+        - todos
+      operationId: addOne
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/item"
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: "#/definitions/item"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  # define Delete
+  /{id}:
+    delete:
+      tags:
+        - todos
+      operationId: destroyOne
+      parameters:
+        - type: integer
+          format: int64
+          name: id
+          in: path
+          required: true
+      responses:
+        204:
+          description: Deleted
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+    
+    # define update
+    parameters:
+      - type: integer
+        format: int64
+        name: id
+        in: path
+        required: true
+    put:
+      tags: ["todos"]
+      operationId: updateOne
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/item"
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: "#/definitions/item"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
