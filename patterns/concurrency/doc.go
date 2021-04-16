@@ -89,6 +89,7 @@ Generators: Transforms a list of things into a channel containing them things. U
 Fan-out: Starting multiple goroutines to handle input from one pipeline
 Fan-in: Combining multiple results into one channel
 Or-Done channel: range over channel safely with ways to cancel loop
+tee-channel: Pass in a channel to read from, and it returns 2 channels that will get the same value
 */
 
 package concurrency
