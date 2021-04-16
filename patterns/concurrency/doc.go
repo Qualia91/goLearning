@@ -50,7 +50,13 @@ Sync Package Objects:
 - Once
 - Pool
 
+Select statements are non-deterministic.
 
+
+runtime.NumCPU() = number of CPU cores on machine
+
+runtime.GOMAXPROCS() = Number of threads that will host worker queues
+	Reason to change this: To find race conditions more easily
 */
 
 package concurrency
