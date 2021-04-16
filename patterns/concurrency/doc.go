@@ -87,8 +87,8 @@ Pipeline: A series of things that take in data, do a transform, and pass it back
 		- Very functional programming like (Building up higher order functions by composing functions)
 Generators: Transforms a list of things into a channel containing them things. Used to parrallelise iteration/tasks on a list
 Fan-out: Starting multiple goroutines to handle input from one pipeline
-Fan-in: COmbining multiple results into one channel
-
+Fan-in: Combining multiple results into one channel
+Or-Done channel: range over channel safely with ways to cancel loop
 */
 
 package concurrency
