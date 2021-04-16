@@ -79,8 +79,13 @@ Preventing Goroutine Leaks: If a go routine is responsible for creating a gorout
 	- Goroutine receiving on a channel: Also pass in a done channel, and use that to cancel go routine if need be via select statement.
 	- Goroutine blocked on read of channel: Also pass in done channel.
 Or Channel: Recursive function to combine multiple channels and block until any channel fires.
-
-
+Error Handling: Create structures with result and error, and return this instead. The place that needs the result of
+		a concurrent process will also probably care about any errors received. This is very idiomatic with the way
+		most functions return a result and an error, and after such functions you will usually see an if err statement.
+Pipeline: A series of things that take in data, do a transform, and pass it back out. Each transform is a stage of the pipeline.
+		- A stage consumes and returns the same type
+		- Very functional programming like (Building up higher order functions by composing functions)
+Generators: Transforms a list of things into a channel containing them things. Used to parrallelise iteration/tasks on a list
 */
 
 package concurrency
