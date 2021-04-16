@@ -57,6 +57,28 @@ runtime.NumCPU() = number of CPU cores on machine
 
 runtime.GOMAXPROCS() = Number of threads that will host worker queues
 	Reason to change this: To find race conditions more easily
+
+
+Patterns:
+Confinement: Ensuring data is only ever available from one concurrent process.
+	2 types	defer wg.Done()
+		var buff bytes.Buffer
+		for _, b := range data {
+		fmt.Fprintf(&buff, "%c", b)
+		}
+		fmt.Println(buff.String()):
+	- Ad hoc: Achieve confinement through a convention
+	- Lexical: Use lexical scoping to expose only the correct data and concurrency primitives. This
+		involves creating objects within functions, returning the objects from functions after a routine
+		is created that needs to use that object, then running the other routine and passing in the object returned
+		from the first function.
+Fo-Select loop: Select nested in for loop. Reasons for use:
+	- Sending iteration variables out on a channel
+	- Looping infinitely waiting to be stopped
+
+
+
+
 */
 
 package concurrency
