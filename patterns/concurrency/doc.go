@@ -75,8 +75,10 @@ Confinement: Ensuring data is only ever available from one concurrent process.
 Fo-Select loop: Select nested in for loop. Reasons for use:
 	- Sending iteration variables out on a channel
 	- Looping infinitely waiting to be stopped
-
-
+Preventing Goroutine Leaks: If a go routine is responsible for creating a goroutine, it is also responsible for ensuring it can stop.
+	- Goroutine receiving on a channel: Also pass in a done channel, and use that to cancel go routine if need be via select statement.
+	- Goroutine blocked on read of channel: Also pass in done channel.
+Or Channel: Recursive function to combine multiple channels and block until any channel fires.
 
 
 */
