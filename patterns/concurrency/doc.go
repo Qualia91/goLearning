@@ -128,11 +128,6 @@ Context Package:
 			- Don't pass data that drives functionality
 	- Takeway: The done/cancel stuff is really good. It means cancels can be littered throughout for different things.
 		The value store should be used at own risk, and sparingly.
-=======
-
-
-
-
 
 Error propagations:
 Errors should contain the following:
@@ -151,8 +146,6 @@ Timeouts:
 			}
 - Heartbeats: Allows concurrent process to signal they are alive to other processes.
 	- interval based heartbeat tests are an example of real usage
->>>>>>> 211b9f937d10c07ef6482bd43d1dfe19246de391
-
 
 */
 
