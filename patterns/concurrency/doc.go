@@ -91,6 +91,7 @@ Fan-in: Combining multiple results into one channel
 Or-Done channel: range over channel safely with ways to cancel loop
 tee-channel: Pass in a channel to read from, and it returns 2 channels that will get the same value
 Bridge-channel: Destructures a channel of channels into a simple channel
+<<<<<<< HEAD
 Queues: Allows decoupling of stages:
 		Little Law: L = Lam * W
 		- L = Average number of units in the system
@@ -127,6 +128,30 @@ Context Package:
 			- Don't pass data that drives functionality
 	- Takeway: The done/cancel stuff is really good. It means cancels can be littered throughout for different things.
 		The value store should be used at own risk, and sparingly.
+=======
+
+
+
+
+
+Error propagations:
+Errors should contain the following:
+- What happened
+- WHen and where it happened
+- User friendly message
+- How the user can get more information
+
+Timeouts:
+- recommended to place timeout on all concurrent processes just incase
+- Make sure everything that takes a noticeable amount of time to run is preemtable:
+			select {
+			case <-done:
+				return
+			default:
+			}
+- Heartbeats: Allows concurrent process to signal they are alive to other processes.
+	- interval based heartbeat tests are an example of real usage
+>>>>>>> 211b9f937d10c07ef6482bd43d1dfe19246de391
 
 
 */
