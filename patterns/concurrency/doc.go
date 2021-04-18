@@ -111,7 +111,8 @@ Timeouts:
 				return
 			default:
 			}
-- Heartbeats: Allows concurrent process to signal they are alive to other processes
+- Heartbeats: Allows concurrent process to signal they are alive to other processes.
+	- interval based heartbeat tests are an example of real usage
 
 
 */
