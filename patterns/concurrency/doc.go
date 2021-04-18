@@ -91,6 +91,44 @@ Fan-in: Combining multiple results into one channel
 Or-Done channel: range over channel safely with ways to cancel loop
 tee-channel: Pass in a channel to read from, and it returns 2 channels that will get the same value
 Bridge-channel: Destructures a channel of channels into a simple channel
+Queues: Allows decoupling of stages:
+		Little Law: L = Lam * W
+		- L = Average number of units in the system
+		- Lam = average arrival rate of units
+		- W = average time a unit spends in a system
+		- Example 1: How many requests per second our pipeline can handle (Lam):
+			L = 3 stages all processing a request = 3r
+			W = 1 second
+			Lam = 3 => We can handle 3 requests per second
+		- Example 2: How big does out queue need to be to handle 100,000 requests per second.
+			Pipeline has 3 stages: L = Lr - 3r
+			Lam = 100,000
+			Each request takes 1ms
+			Lr - 3r = 100,000r/s * 0.0001s
+			Lr - 3r = 10r
+			Lr = 7r
+			L = 7 => Our queue needs to be 7 units long
+Context Package:
+- The allow for done data to be passed to child goroutines
+- Contexts are immutable
+- To change the context for a child (add in a cancel function), you use the functions on the current conext, and pass along the resultant new context
+- Instances of context are meant to flow through the programs call-graph
+- Never store context as member variables, always pass them in as contexts internally change
+- Creating an empty context:
+	- Background(): Normal way of creating a default context
+	- TODO(): Used when you don't know what context to use, but must not reach production
+	- can pass key value pairs to context value, but they must be comparable and safe top access by multiple go routines
+		- it as advised you create a custom key and value type that everything that uses ctv values uses to manage type safety
+		- Types of data should be scoped and scoping should be scrutinized by the team as a whole. An example:
+			- If data is process data, don't transit across api boundaries (vice verse)
+			- Data should be immutable
+			- Mostly use simple types
+			- Data should be data and not types or methods
+			- Don't pass data that drives functionality
+	- Takeway: The done/cancel stuff is really good. It means cancels can be littered throughout for different things.
+		The value store should be used at own risk, and sparingly.
+
+
 */
 
 package concurrency

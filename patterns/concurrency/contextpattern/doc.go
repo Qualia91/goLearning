@@ -7,4 +7,4 @@ values, cancellation signals and deadlines across API boundaries.
 More information can be found: https://blog.golang.org/context
 */
 
-package contextpattern
+package main
