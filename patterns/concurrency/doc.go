@@ -155,6 +155,7 @@ Healing unhealthy goroutines:
 	- Create steward function that wraps a function to run
 	- Use heartbeat pattern to monitor health
 	- Is heatbeat not found, close function and restart it using steward function
+	- Similar to erlangs supervisors
 */
 
 package concurrency
