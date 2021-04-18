@@ -144,9 +144,17 @@ Timeouts:
 				return
 			default:
 			}
-- Heartbeats: Allows concurrent process to signal they are alive to other processes.
+Heartbeats: Allows concurrent process to signal they are alive to other processes.
 	- interval based heartbeat tests are an example of real usage
 
+Rate limiters: Set number of tokens in bucket and rate at which tokens are added, and if a function needs to do some work, they
+	must get a token first, limiting the rate a function can run.
+	- golang.org/x/time/rate
+
+Healing unhealthy goroutines:
+	- Create steward function that wraps a function to run
+	- Use heartbeat pattern to monitor health
+	- Is heatbeat not found, close function and restart it using steward function
 */
 
 package concurrency
